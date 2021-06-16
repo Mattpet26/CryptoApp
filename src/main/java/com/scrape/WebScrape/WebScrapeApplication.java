@@ -27,110 +27,109 @@ public class WebScrapeApplication {
 
 		//Scrape();
 
-		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		parameters.add(new BasicNameValuePair("start","1"));
-		parameters.add(new BasicNameValuePair("limit","5000"));
-		parameters.add(new BasicNameValuePair("convert","USD"));
-
-		try{
-			CryptoDTO[] capturedCrypto;
-			capturedCrypto = makeAPIcall(uri, parameters);
-			for(int i = 0; i < capturedCrypto.length; i++){
-				try{
-					System.out.println(capturedCrypto[i].name);
-					System.out.println(capturedCrypto[i].id);
-					System.out.println(capturedCrypto[i].quote.USD.price);
-					System.out.println(capturedCrypto[i].quote.USD.percent_change_1hr);
-					System.out.println(capturedCrypto[i].quote.USD.percent_change_24hr);
-					System.out.println(capturedCrypto[i].quote.USD.percent_change_7d);
-					System.out.println(capturedCrypto[i].quote.USD.volume_24hr);
-
-
-					System.out.println(" ");
-				}catch(Exception e){
-					System.out.println(" ");
-				}
-
-
-			}
-		}catch(IOException e){
-			System.out.println("ERROR: Cannot access content - " + e.toString());
-		}catch(URISyntaxException ex){
-			System.out.println("ERROR: Invalid URL - " + ex.toString());
-		}
-	}
-	public static CryptoDTO[] makeAPIcall(String uri, List<NameValuePair> parameters) throws URISyntaxException, IOException{
-		String response_content = "";
-
-		URIBuilder query = new URIBuilder(uri);
-		query.addParameters(parameters);
-
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet request = new HttpGet(query.build());
-
-		request.setHeader(HttpHeaders.ACCEPT, "application/json");
-		request.addHeader("X-CMC_PRO_API_KEY", apiKey);
-
-		CloseableHttpResponse response = client.execute(request);
-
-		try{
-			System.out.println(response);
-			HttpEntity entity = response.getEntity();
-			response_content = EntityUtils.toString(entity);
-			EntityUtils.consume(entity);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		Gson gson = new Gson();
-		DataDTO result = gson.fromJson(response_content, DataDTO.class);
-
-		return result.data;
-	}
-
-//	public static void Scrape() {
-//		String url = "https://coinmarketcap.com/";
-//		Document document = null;
-//		try {
-//			document = Jsoup.connect(url).get();
-//			for(Element row : document.select(
-//					// inspect the table to see what it's class is. Remove spaces with .
-//					// add a space + tr on the end, to select the tablerows
-//					"table.cmc-table.cmc-table___11lFC.cmc-table-homepage___2_guh tr")){
-//				if(row.select("td:nth-child(3)").text().equals("")){
-//					continue;
-//				}else{
-//					String name = row.select("td:nth-child(3)").text();
-//					String tempPrice = row.select("td:nth-child(4)").text();
+//		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+//		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+//		parameters.add(new BasicNameValuePair("start","1"));
+//		parameters.add(new BasicNameValuePair("limit","5000"));
+//		parameters.add(new BasicNameValuePair("convert","USD"));
 //
-//					System.out.println(name + " - " + tempPrice);
+//		try{
+//			CryptoDTO[] capturedCrypto;
+//			capturedCrypto = makeAPIcall(uri, parameters);
+//			for(int i = 0; i < capturedCrypto.length; i++){
+//				try{
+//					System.out.println(capturedCrypto[i].name);
+//					System.out.println(capturedCrypto[i].id);
+//					System.out.println(capturedCrypto[i].quote.USD.price);
+//					System.out.println(capturedCrypto[i].quote.USD.percent_change_1hr);
+//					System.out.println(capturedCrypto[i].quote.USD.percent_change_24hr);
+//					System.out.println(capturedCrypto[i].quote.USD.percent_change_7d);
+//					System.out.println(capturedCrypto[i].quote.USD.volume_24hr);
+//
+//
+//					System.out.println(" ");
+//				}catch(Exception e){
+//					System.out.println(" ");
 //				}
+//
+//
 //			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
+//		}catch(IOException e){
+//			System.out.println("ERROR: Cannot access content - " + e.toString());
+//		}catch(URISyntaxException ex){
+//			System.out.println("ERROR: Invalid URL - " + ex.toString());
 //		}
 //	}
-
-	class DataDTO{
-		public CryptoDTO[] data;
+//	public static CryptoDTO[] makeAPIcall(String uri, List<NameValuePair> parameters) throws URISyntaxException, IOException{
+//		String response_content = "";
+//
+//		URIBuilder query = new URIBuilder(uri);
+//		query.addParameters(parameters);
+//
+//		CloseableHttpClient client = HttpClients.createDefault();
+//		HttpGet request = new HttpGet(query.build());
+//
+//		request.setHeader(HttpHeaders.ACCEPT, "application/json");
+//		request.addHeader("X-CMC_PRO_API_KEY", apiKey);
+//
+//		CloseableHttpResponse response = client.execute(request);
+//
+//		try{
+//			System.out.println(response);
+//			HttpEntity entity = response.getEntity();
+//			response_content = EntityUtils.toString(entity);
+//			EntityUtils.consume(entity);
+//
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		Gson gson = new Gson();
+//		DataDTO result = gson.fromJson(response_content, DataDTO.class);
+//
+//		return result.data;
+//	}
+//
+////	public static void Scrape() {
+////		String url = "https://coinmarketcap.com/";
+////		Document document = null;
+////		try {
+////			document = Jsoup.connect(url).get();
+////			for(Element row : document.select(
+////					// inspect the table to see what it's class is. Remove spaces with .
+////					// add a space + tr on the end, to select the tablerows
+////					"table.cmc-table.cmc-table___11lFC.cmc-table-homepage___2_guh tr")){
+////				if(row.select("td:nth-child(3)").text().equals("")){
+////					continue;
+////				}else{
+////					String name = row.select("td:nth-child(3)").text();
+////					String tempPrice = row.select("td:nth-child(4)").text();
+////
+////					System.out.println(name + " - " + tempPrice);
+////				}
+////			}
+////		} catch (IOException e) {
+////			e.printStackTrace();
+////		}
+////	}
+//
+//	class DataDTO{
+//		public CryptoDTO[] data;
+//	}
+//
+//	class CryptoDTO{
+//		public Long id;
+//		public String name;
+//		public String price;
+//		public Quote quote;
+//	}
+//	class Quote{
+//		public USD USD;
+//	}
+//	class USD{
+//		public double price;
+//		public double volume_24hr;
+//		public double percent_change_1hr;
+//		public double percent_change_24hr;
+//		public double percent_change_7d;
 	}
-
-	class CryptoDTO{
-		public Long id;
-		public String name;
-		public String price;
-		public Quote quote;
-	}
-	class Quote{
-		public USD USD;
-	}
-	class USD{
-		public double price;
-		public double volume_24hr;
-		public double percent_change_1hr;
-		public double percent_change_24hr;
-		public double percent_change_7d;
-	}
-
 }
