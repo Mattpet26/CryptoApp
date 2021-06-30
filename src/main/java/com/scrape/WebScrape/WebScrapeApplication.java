@@ -1,6 +1,7 @@
 package com.scrape.WebScrape;
 
 import com.google.gson.Gson;
+import com.scrape.WebScrape.models.Crypto;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -12,15 +13,25 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
+import org.apache.hc.core5.reactor.Command;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 @SpringBootApplication
-public class WebScrapeApplication {
+public class WebScrapeApplication implements CommandLineRunner {
 	private static String apiKey = "784caf04-f15b-44bf-b2a2-b03265f8dc46";
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(WebScrapeApplication.class, args);
@@ -131,5 +142,13 @@ public class WebScrapeApplication {
 //		public double percent_change_1hr;
 //		public double percent_change_24hr;
 //		public double percent_change_7d;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		String sql = "SELECT * FROM cryptoDB"; //making edits for testing a push
+		List<Crypto> cryptos = jdbcTemplate.query(sql,
+				BeanPropertyRowMapper.newInstance(Crypto.class));
+		cryptos.forEach(System.out :: println);
 	}
 }

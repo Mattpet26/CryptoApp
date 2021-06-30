@@ -14,4 +14,6 @@ public class HomeController {
         m.addAttribute("user", principal);
         return "home";
     }
+
+
 }

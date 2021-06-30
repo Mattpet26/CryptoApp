@@ -136,3 +136,58 @@ body{
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
 }
+
+#row ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#row li{
+    display: inline-block;
+}
+
+#row{
+    border-style: solid;
+    margin-top: 11px;
+}
+#row3 ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#row3 li{
+    display: inline-block;
+}
+
+#row3{
+    border-style: solid;
+    margin-top: 11px;
+}
+#row2 ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#row2 li{
+    display: inline-block;
+}
+
+#row2{
+    border-style: solid;
+    margin-top: 11px;
+}
+
+#link{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
